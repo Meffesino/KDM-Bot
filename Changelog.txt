@@ -1,0 +1,5 @@
+0.0.9 - Trial and Error Bot
+
+0.1.0 - Initial stable release
+
+0.2.0 - Added FAQ Search

@@ -1,0 +1,15 @@
+{
+  "name": "kdm",
+  "version": "0.2.0",
+  "description": "Kingdom Death: Monster Support Bot",
+  "main": "app.js",
+  "author": "Meffesino, Klutz",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^2.3.0",
+    "discord.js": "^11.2.1",
+    "moment": "^2.19.3",
+    "mysql": "^2.15.0",
+    "util": "^0.10.3"
+  }
+}
