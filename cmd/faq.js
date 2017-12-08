@@ -13,13 +13,6 @@ exports.run = (client, message, args = []) => {
         help.run(client, message, [ 'faq' ] )
         return
     }
-
-    //AND DESCRIPTION LIKE '%" + [args[1]] + "%' AND DESCRIPTION LIKE '%" + [args[2]] + "%' AND DESCRIPTION LIKE '%" + [args[3]] + "%' AND DESCRIPTION LIKE '%" + [args[4]] + "%'"
-    /*
-SELECT * FROM FAQ WHERE QUESTION LIKE '%arrow%' AND QUESTION LIKE '%bow%' 
-UNION
-SELECT * FROM FAQ WHERE ANSWER LIKE '%arrow%' AND ANSWER LIKE '%bow%'
-    */
     
     var execute = "SELECT * FROM FAQ WHERE QUESTION LIKE '%" + [args[0]] + "%'"
     for (var i in args) {
@@ -36,29 +29,31 @@ SELECT * FROM FAQ WHERE ANSWER LIKE '%arrow%' AND ANSWER LIKE '%bow%'
     
     sql.qry(execute, message, "FAQ", function(err, callback) {
         if (err) { 
-            message.channel.send(`**Error** Search "${args[0]} results in" ${err.code}`) 
+            const embed = new Discord.RichEmbed()
+            .setTitle("Error")
+            .setDescription(`Error Code: ${err.code}\n\n Search: ${args[0]}`)
+            .setColor(0xEF6E6E)
+            .setFooter(`For more information: ${config.prefix}help ${command.help.name}`)
+            message.channel.send({embed}).then(m => m.delete(config.deletetimer));
         }
         if (callback) {
             if (callback.length === 0) { 
-                console.log("callback 0")
                 const embed = new Discord.RichEmbed()
                 .setTitle("Error in Request - nothing found")
                 .setDescription(`Your request: **${config.prefix}${command.help.usage} ${args[0]}** has given no result.\nTry to change your request\n\nExample:\n          ${command.help.example}`)
                 .setColor(0xEF6E6E)
                 .setFooter(`For more information: ${config.prefix}help ${command.help.name}`)
-                message.channel.send({embed});
+                message.channel.send({embed}).then(m => m.delete(config.deletetimer));
             }
             else if (callback.length <= 2) { // 1 hit! - Post results (callback) immediately.
-                console.log("callback <=2")
                 const embed = new Discord.RichEmbed()
                 embed.setColor(0x97ECEA)
                 embed.setTitle(`Results of "${args}"`)
                 embed.setDescription(`${callback.length} results:`)
                 for(i in callback) { // 1 hit! - Post results (callback) immediately.
                     if (i < 2) {
-                        console.log("answer: ", callback[i].QUESTION, callback[i].QUESTION.length)
-                        console.log("answer: ", callback[i].ANSWER, callback[i].ANSWER.length)
-                        if (callback[i].ANSWER.length >= 950) {
+                        var lengthsum = callback[i].ANSWER.length + callback[i].SOURCE.length
+                        if (lengthsum >= 1000) {
                             embed.addField(callback[i].QUESTION,`${callback[i].ANSWER.slice(0,1020)}`)
                             embed.addField(`[continue...]`,`${callback[i].ANSWER.slice(1020,2000)}\n\nSource: ${callback[i].SOURCE}`)
                         }
@@ -70,7 +65,6 @@ SELECT * FROM FAQ WHERE ANSWER LIKE '%arrow%' AND ANSWER LIKE '%bow%'
                 message.channel.send({embed});
             }
             else  {
-                console.log("callback else")
                 const embed = new Discord.RichEmbed()
                 embed.setColor(0x97ECEA)
                 embed.setTitle(`Results of "${args}"`)
@@ -82,12 +76,10 @@ SELECT * FROM FAQ WHERE ANSWER LIKE '%arrow%' AND ANSWER LIKE '%bow%'
                 for(i in callback) {
                   if (i < 20) {
                     embed.addField(`${config.prefix}fid ${callback[i].F_ID}`,`${callback[i].QUESTION}`)
-                    //var y = y + `${config.prefix}fid ${callback[i].F_ID}\t ****\n\n`
                   }
                 }
-                //embed.addField(x,y)
                 embed.setFooter(`Use ${config.prefix}fid <ID> for the FAQ of the Keyword.`)
-                message.channel.send({embed});
+                message.channel.send({embed}).then(m => m.delete(config.deletetimer));
               }  
         }
     });

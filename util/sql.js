@@ -16,11 +16,10 @@ const log = message => {
 
 function qry(execute, message, table, callback) { //execute = SQL Command
   var query = pool.query(execute, function(error, results, fields) {
-    console.log(query.sql)
+    //console.log(query.sql)
     var userid = message.author.id
     var username = message.author.username
     if (error) {
-      console.log("ERROR - SQL.JS")
       var resultslength = `ERROR: ${error.code}`
       error = error.code
     }  

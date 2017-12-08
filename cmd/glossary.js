@@ -27,12 +27,16 @@ exports.run = (client, message, args = []) => {
     
     sql.qry(execute, message, "Glossary", function(err, callback) {
         if (err) { 
-            message.channel.send(`**Error** Search "${args[0]} results in" ${err.code}`) 
+            const embed = new Discord.RichEmbed()
+            .setTitle("Error")
+            .setDescription(`Error Code: ${err.code}\n\n Search: ${args[0]}`)
+            .setColor(0xEF6E6E)
+            .setFooter(`For more information: ${config.prefix}help ${command.help.name}`)
+            message.channel.send({embed}).then(m => m.delete(config.deletetimer));
         }
         if (callback) {
             if (callback.length === 0) { 
                 gd.run(client, message, args);
-
             }
             else if (callback.length <= 3) { // 1 hit! - Post results (callback) immediately.
                 const embed = new Discord.RichEmbed()
@@ -61,7 +65,7 @@ exports.run = (client, message, args = []) => {
                 }
                 embed.addField(x,y)
                 embed.setFooter(`Use ${config.prefix}gid <ID> for the description of the Keyword.`)
-                message.channel.send({embed});
+                message.channel.send({embed}).then(m => m.delete(config.deletetimer));
               }  
         }
     });

@@ -1,5 +1,17 @@
-0.0.9 - Trial and Error Bot
+0.3.0 - 
+Added dm (direct message). When someone is spamming in public channel. The bot will private message the person and tell him, to proceed asking the bot via private message to reduce spam for everyone in the channel without additional information. This can be triggered with permission lvl 2.
 
-0.1.0 - Initial stable release
+Added cards: Bot will post the picture of the card and delete his post after specified time to reduce traffic and spam.
 
-0.2.0 - Added FAQ Search
+Added delete timer on error messages. Post of bot will be deleted after a specified time.
+
+0.2.0 - 
+Added FAQ Search
+
+
+0.1.0 - 
+Initial stable release
+
+
+0.0.9 - 
+Trial and Error Bot

@@ -18,7 +18,8 @@ exports.run = (client, message, args = []) => {
   var count;
   var qryamount;
   var Glossary = { table:"Glossary", }
-  var FAQ = {table:"FAQ", }
+  var FAQ = { table:"FAQ", }
+  var Cards = { table:"Cards", }
   var error2;
 
   log(chalk.bgWhite.gray(`${chalk.blueBright.bold(`INFO:`)} ${message.author.username}`));
@@ -30,15 +31,22 @@ GetInfo(Glossary.table, function(error, updatetime, count, qryamount) {
   }
   Glossary = { updatetime: updatetime , count : count , qryamount : qryamount }
 
-    GetInfo(FAQ.table, function(error, updatetime, count, qryamount) {  
+  GetInfo(FAQ.table, function(error, updatetime, count, qryamount) {  
+    if (error) { 
+      log(chalk.bgYellow("ERROR... ->", error)); 
+    }
+    FAQ = { updatetime: updatetime , count : count , qryamount : qryamount }
+  
+    GetInfo(Cards.table, function(error, updatetime, count, qryamount) {  
       if (error) { 
         log(chalk.bgYellow("ERROR... ->", error)); 
       }
-      FAQ = { updatetime: updatetime , count : count , qryamount : qryamount }
+      Cards = { updatetime: updatetime , count : count , qryamount : qryamount }
     
       // send message Command can be replaced later with the other FAQ.Tables etc.
       sendMessage()
     });
+  });
 });
 
 
@@ -115,6 +123,11 @@ function sendMessage() {
   • FAQ DB      : ${FAQ.count} Entries
                   ${FAQ.qryamount} Querries
                   ${FAQ.updatetime} Last Update 
+
+  • Cards DB    : ${Cards.count} Entries
+                  ${Cards.qryamount} Querries
+                  ${Cards.updatetime} Last Update 
+
 
   • Bot Authors : ${package.author}
   \`\`\``);

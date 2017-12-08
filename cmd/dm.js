@@ -3,17 +3,26 @@ const Discord = require("discord.js")
 const config = require("../config.json");
 const moment = require('moment');
 const chalk = require('chalk');
+const help = require('./help')
 
 const log = message => {
     console.log(`[${moment().format('YYYY-MM-DD HH:mm:ss')}] ${message}`);
   };
 
-
 exports.run = (client, message, args = []) => {
-    var id;
+    let command = "dm"
+    if(client.commands.has(command)) {
+        command = client.commands.get(command);
+    }
+    if (args.length === 0) {
+        help.run(client, message, [ 'dm' ] )
+        return
+    }
+    
+        var id;
 
-
-    if (args[0].indexOf("@")) { // get the id and proofcheck if user is available.
+    //if (typeof args[0] !== 'undefined' && args[0] !== null) { 
+    if ((args[0].indexOf("@") > 0) && (args[0].indexOf(">") > 0)) { // get the id and proofcheck if user is available.
         id = args[0].split("@")
         id = id[1].split(">").shift()
         if (typeof client.users.get(id) !== 'undefined' && client.users.get(id)) { 
@@ -34,8 +43,14 @@ exports.run = (client, message, args = []) => {
             log(chalk.bgWhite.gray(`${chalk.blueBright.bold(`dm`)} ${chalk.redBright.bold(`ERROR`)} to ${args} by ${message.author.username}`));
         }
     }
-    else { message.channel.send("Error - Usage: ?dm @UserWhoDisturb") }
-
+    else { 
+        const embed = new Discord.RichEmbed()
+        .setTitle("Error: Change your request")
+        .setDescription(`Example: ${command.help.example}`)
+        .setColor(0xEF6E6E)
+        .setFooter(`For more information: ${config.prefix}help ${command.help.name}`)
+        message.channel.send({embed}).then(m => m.delete(config.deletetimer));
+    }
 };
   
   exports.conf = {
@@ -43,7 +58,7 @@ exports.run = (client, message, args = []) => {
     guildOnly: false, // not used yet
     ShowHelp: false,
     Children: [ ],
-    aliases: [`dm`],
+    aliases: [ ],
     permLevel: 2 // Permissions Required, higher is more power
   };
   

@@ -41,7 +41,7 @@ exports.run = (client, message, args = []) => {
                 }
                 embed.setDescription(`Your request: **${config.prefix}${command.help.usage} ${args}** has given no result.\nTry to change your request\n\nExample:\n          ${command.help.example}`)                .setColor(0xEF6E6E)
                 embed.setFooter(`For more information: ${config.prefix}help ${command.help.name}`)
-                message.channel.send({embed});
+                message.channel.send({embed}).then(m => m.delete(config.deletetimer));
             }
             else if (callback.length <= 3) { // 1 hit! - Post results (callback) immediately.
                 const embed = new Discord.RichEmbed()
@@ -70,7 +70,7 @@ exports.run = (client, message, args = []) => {
                 }
                 embed.addField(x,y)
                 embed.setFooter(`Use ${config.prefix}gid <ID> for the description of the Keyword.`)
-                message.channel.send({embed});
+                message.channel.send({embed}).then(m => m.delete(config.deletetimer));
               }  
         }
     });

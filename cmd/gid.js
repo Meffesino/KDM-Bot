@@ -19,7 +19,12 @@ exports.run = (client, message, args = []) => {
     
     sql.qry("SELECT * FROM Glossary WHERE G_ID = '" + [args[0]] + "'", message, "Glossary", function(err, callback) {
         if (err) { 
-            message.channel.send(`**Error** Search "${args[0]} results in" ${err.code}`) 
+            const embed = new Discord.RichEmbed()
+            .setTitle("Error")
+            .setDescription(`Error Code: ${err.code}\n\n Search: ${args[0]}`)
+            .setColor(0xEF6E6E)
+            .setFooter(`For more information: ${config.prefix}help ${command.help.name}`)
+            message.channel.send({embed}).then(m => m.delete(config.deletetimer));
         }
         if (callback) {
             if (callback.length === 0) { 
@@ -28,7 +33,7 @@ exports.run = (client, message, args = []) => {
                 .setDescription(`Your request: **${config.prefix}${command.help.usage} ${args[0]}** has given no result.\nTry to change your request\n\nExample:\n          ${command.help.example}`)
                 .setColor(0xEF6E6E)
                 .setFooter(`For more information: ${config.prefix}help ${command.help.name}`)
-                message.channel.send({embed});
+                message.channel.send({embed}).then(m => m.delete(config.deletetimer));
             }
             if (callback.length === 1) { // 1 hit! - Post results (callback) immediately.
                 const embed = new Discord.RichEmbed()
