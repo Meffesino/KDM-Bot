@@ -32,7 +32,7 @@ exports.run = (client, message, args = []) => {
             .setDescription(`Error Code: ${err.code}\n\n Search: ${args[0]}`)
             .setColor(0xEF6E6E)
             .setFooter(`For more information: ${config.prefix}help ${command.help.name}`)
-            message.channel.send({embed}).then(m => m.delete(config.deletetimer));
+            message.channel.send({embed}).then(m => m.delete(config.deletetimererror));
         }
         if (callback) {
             if (callback.length === 0) { 
@@ -65,7 +65,7 @@ exports.run = (client, message, args = []) => {
                 }
                 embed.addField(x,y)
                 embed.setFooter(`Use ${config.prefix}gid <ID> for the description of the Keyword.`)
-                message.channel.send({embed}).then(m => m.delete(config.deletetimer));
+                message.channel.send({embed}).then(m => m.delete(config.deletetimererror));
               }  
         }
     });

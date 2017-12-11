@@ -24,7 +24,7 @@ exports.run = (client, message, args = []) => {
             .setDescription(`Error Code: ${err.code}\n\n Search: ${args[0]}`)
             .setColor(0xEF6E6E)
             .setFooter(`For more information: ${config.prefix}help ${command.help.name}`)
-            message.channel.send({embed}).then(m => m.delete(config.deletetimer));
+            message.channel.send({embed}).then(m => m.delete(config.deletetimererror));
         }
         if (callback) {
             if (callback.length === 0) { 
@@ -33,7 +33,7 @@ exports.run = (client, message, args = []) => {
                 .setDescription(`Your request: **${config.prefix}${command.help.usage} ${args[0]}** has given no result.\nTry to change your request\n\nExample:\n          ${command.help.example}`)
                 .setColor(0xEF6E6E)
                 .setFooter(`For more information: ${config.prefix}help ${command.help.name}`)
-                message.channel.send({embed}).then(m => m.delete(config.deletetimer));
+                message.channel.send({embed}).then(m => m.delete(config.deletetimererror));
             }
             if (callback.length === 1) { // 1 hit! - Post results (callback) immediately.
                 const embed = new Discord.RichEmbed()

@@ -49,7 +49,7 @@ exports.run = (client, message, args = []) => {
         .setDescription(`Example: ${command.help.example}`)
         .setColor(0xEF6E6E)
         .setFooter(`For more information: ${config.prefix}help ${command.help.name}`)
-        message.channel.send({embed}).then(m => m.delete(config.deletetimer));
+        message.channel.send({embed}).then(m => m.delete(config.deletetimererror));
     }
 };
   
