@@ -40,7 +40,7 @@ exports.run = (client, message, args = []) => {
         log(chalk.bgWhite.gray(`${chalk.blueBright.bold(`dm`)} to ${client.users.get(id).username} by ${message.author.username}`));
         }
         else { 
-            log(chalk.bgWhite.gray(`${chalk.blueBright.bold(`dm`)} ${chalk.redBright.bold(`ERROR`)} to ${args} by ${message.author.username}`));
+            log(chalk.bgWhite.gray(`${chalk.blueBright.bold(`dm`)} ${chalk.redBright.bold(`ERROR`)} to ${args.join(' ')} by ${message.author.username}`));
         }
     }
     else { 

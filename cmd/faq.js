@@ -20,7 +20,7 @@ exports.run = (client, message, args = []) => {
         execute = execute + " AND QUESTION LIKE '%" + [args[i]] + "%'"
         }
     }
-    execute = execute + "UNION SELECT * FROM FAQ WHERE ANSWER LIKE '%" + [args[0]] + "%'"
+    execute = execute + " UNION SELECT * FROM FAQ WHERE ANSWER LIKE '%" + [args[0]] + "%'"
     for (var i in args) {
         if (i != 0) {
         execute = execute + " AND ANSWER LIKE '%" + [args[i]] + "%'" 
@@ -31,7 +31,7 @@ exports.run = (client, message, args = []) => {
         if (err) { 
             const embed = new Discord.RichEmbed()
             .setTitle("Error")
-            .setDescription(`Error Code: ${err.code}\n\n Search: ${args[0]}`)
+            .setDescription(`Error Code: ${err}\n\n Search: ${args[0]}`)
             .setColor(0xEF6E6E)
             .setFooter(`For more information: ${config.prefix}help ${command.help.name}`)
             message.channel.send({embed}).then(m => m.delete(config.deletetimererror));
@@ -48,7 +48,7 @@ exports.run = (client, message, args = []) => {
             else if (callback.length <= 2) { // 1 hit! - Post results (callback) immediately.
                 const embed = new Discord.RichEmbed()
                 embed.setColor(0x97ECEA)
-                embed.setTitle(`Results of "${args}"`)
+                embed.setTitle(`Results of "${args.join(' ')}"`)
                 embed.setDescription(`${callback.length} results:`)
                 for(i in callback) { // 1 hit! - Post results (callback) immediately.
                     if (i < 2) {
@@ -67,7 +67,7 @@ exports.run = (client, message, args = []) => {
             else  {
                 const embed = new Discord.RichEmbed()
                 embed.setColor(0x97ECEA)
-                embed.setTitle(`Results of "${args}"`)
+                embed.setTitle(`Results of "${args.join(' ')}"`)
 
                 var x = `${callback.length} results:`
                 var y = ""

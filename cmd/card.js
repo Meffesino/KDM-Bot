@@ -28,9 +28,9 @@ exports.run = (client, message, args = []) => {
         if (err) { 
             const embed = new Discord.RichEmbed()
             .setTitle("Error in cards")
-            .setDescription(`Error Code: ${err.code}\n\n Search: ${args[0]}`)
+            .setDescription(`Error Code: ${err}\n\n Search: ${args[0]}`)
             .setColor(0xEF6E6E)
-            .addField("Error Detail", err)
+            //.addField("Error Detail", err)
             .setFooter(`For more information: ${config.prefix}help ${command.help.name}`)
             message.channel.send({embed}).then(m => m.delete(config.deletetimererror));
         }
@@ -69,7 +69,7 @@ exports.run = (client, message, args = []) => {
             }
             else  {
                 embed.setColor(0x97ECEA)
-                embed.setTitle(`Results of "${args}"`)
+                embed.setTitle(`Results of "${args.join(' ')}"`)
                 embed.setDescription('')
                 var x = `${callback.length} results:`
                 var y = ""
@@ -86,10 +86,6 @@ exports.run = (client, message, args = []) => {
         }
     });
 
-
-
-
-// ADD LOG
 
 }; 
 

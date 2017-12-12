@@ -15,15 +15,7 @@ exports.run = (client, message, args) => {
   log(chalk.bgWhite.gray(`${chalk.blueBright.bold(`Help:`)} ${message.author.username}`));
   //Show ?help commands.
   if (!args[0]) {
-    var a = client.commands.map(c=>c.help.name)
-    var s = ("")
-    for (val of a) {
-      command = client.commands.get(val);
-      if (command.conf.ShowHelp === true) {  // Show only the commands, which are flagged as "ShowHelp True"
-      var s = s + (`${command.help.name}:: ${command.help.description}\n`)
-      }
-    }
-    message.author.send(`= Command List =\n\n[Use ${client.commands.get("help").help.example} <commandname> for details]\n\n${s}`,{code: 'asciidoc'});
+    StandardHelpMsg()
   } 
 
   // check details of commands @ ?help <command>
@@ -38,8 +30,23 @@ exports.run = (client, message, args) => {
     if (command) {
       message.author.send(`= ${command.help.name} =\n${command.help.description_detailed}\nusage::   ${config.prefix}${command.help.usage}\nAliases:: ${command.conf.aliases.map(c=>`${config.prefix}${c}`)}\nexample:: ${command.help.example}`, {code: 'asciidoc'});
     }
+    else {
+      StandardHelpMsg()
+    }
   }
+  function StandardHelpMsg() {
+    var a = client.commands.map(c=>c.help.name)
+    var s = ("")
+    for (val of a) {
+      command = client.commands.get(val);
+      if (command.conf.ShowHelp === true) {  // Show only the commands, which are flagged as "ShowHelp True"
+      var s = s + (`${command.help.name}:: ${command.help.description}\n`)
+      }
+    }
+    message.author.send(`= Command List =\n\n[Use ${client.commands.get("help").help.example} <commandname> for details]\n\n${s}`,{code: 'asciidoc'});
+  };
 };
+
 
 
 

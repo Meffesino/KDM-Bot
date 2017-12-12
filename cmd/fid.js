@@ -21,7 +21,7 @@ exports.run = (client, message, args = []) => {
         if (err) { 
             const embed = new Discord.RichEmbed()
             .setTitle("Error")
-            .setDescription(`Error Code: ${err.code}\n\n Search: ${args[0]}`)
+            .setDescription(`Error Code: ${err}\n\n Search: ${args[0]}`)
             .setColor(0xEF6E6E)
             .setFooter(`For more information: ${config.prefix}help ${command.help.name}`)
             message.channel.send({embed}).then(m => m.delete(config.deletetimererror));

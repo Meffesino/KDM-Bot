@@ -23,10 +23,21 @@ exports.run = (client, message, args = []) => {
         execute = execute + " AND DESCRIPTION LIKE '%" + [args[i]] + "%'" 
         }
     }
+    execute = execute + " UNION SELECT * FROM Glossary WHERE TOPIC LIKE '%" + [args[0]] + "%'"
+    for (var i in args) {
+        if (i != 0) {
+        execute = execute + " AND TOPIC LIKE '%" + [args[i]] + "%'" 
+        }
+    }
     
     sql.qry(execute, message, "Glossary", function(err, callback) {
         if (err) { 
-            message.channel.send(`**Error** Search "${args[0]} results in" ${err.code}`) 
+            const embed = new Discord.RichEmbed()
+            .setTitle("Error in gd")
+            .setDescription(`Error Code: ${err}\n\n Search: ${args[0]}`)
+            .setColor(0xEF6E6E)
+            .setFooter(`For more information: ${config.prefix}help ${command.help.name}`)
+            message.channel.send({embed}).then(m => m.delete(config.deletetimererror));
         }
         if (callback) {
             if (callback.length === 0) { 
@@ -39,14 +50,14 @@ exports.run = (client, message, args = []) => {
                 else { 
                     embed.setTitle("Error in Request - nothing found.")  
                 }
-                embed.setDescription(`Your request: **${config.prefix}${command.help.usage} ${args}** has given no result.\nTry to change your request\n\nExample:\n          ${command.help.example}`)                .setColor(0xEF6E6E)
+                embed.setDescription(`Your request: **${config.prefix}${command.help.usage} ${args.join(' ')}** has given no result.\nTry to change your request\n\nExample:\n          ${command.help.example}`)                .setColor(0xEF6E6E)
                 embed.setFooter(`For more information: ${config.prefix}help ${command.help.name}`)
                 message.channel.send({embed}).then(m => m.delete(config.deletetimererror));
             }
             else if (callback.length <= 3) { // 1 hit! - Post results (callback) immediately.
                 const embed = new Discord.RichEmbed()
                 embed.setColor(0x97ECEA)
-                embed.setTitle(`Results of "${args}"`)
+                embed.setTitle(`Results of "${args.join(' ')}"`)
                 embed.setDescription(`${callback.length} results:`)
                 for(i in callback) { // 1 hit! - Post results (callback) immediately.
                     if (i < 3) {
@@ -58,7 +69,7 @@ exports.run = (client, message, args = []) => {
             else  {
                 const embed = new Discord.RichEmbed()
                 embed.setColor(0x97ECEA)
-                embed.setTitle(`Results of "${args}"`)
+                embed.setTitle(`Results of "${args.join(' ')}"`)
                 embed.setDescription('')
                 var x = `${callback.length} results:`
                 var y = ""
