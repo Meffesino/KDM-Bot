@@ -16,7 +16,7 @@ exports.run = (client, message, args = []) => {
         return
     }
     
-    var execute = "SELECT * FROM Cards WHERE NAME LIKE '%" + [args[0]] + "%'"
+    var execute = "SELECT * FROM kdmCardDB WHERE NAME LIKE '%" + [args[0]] + "%'"
     for (var i in args) {
         if (i != 0) {
         execute = execute + " AND NAME LIKE '%" + [args[i]] + "%'"
@@ -44,14 +44,14 @@ exports.run = (client, message, args = []) => {
                 message.channel.send({embed}).then(m => m.delete(config.deletetimererror));
             }
             else if (callback.length === 1) { // 1 hit! - Post results (callback) immediately.
-                if (callback[0].FILELOCATION === null) {
+                if (callback[0].ImageURL === null) {
                     embed.setTitle("This story has not yet been written so it cannot be told.")
                     embed.setDescription(`Try again when the pages are updated.`)
                     embed.setColor(0xEF6E6E)
                     message.channel.send({embed}).then(m => m.delete(config.deletetimererror));
                     return;
                 }
-                 fs.access(__dirname + `/../${callback[0].FILELOCATION}`, fs.constants.R_OK, (err) => {
+                 fs.access(__dirname + `/../${callback[0].ImageURL}`, fs.constants.R_OK, (err) => {
                     if (err) {
                         embed.setTitle("Error in cards")
                         embed.setDescription(`Error Code: ${err.code}`)
@@ -61,26 +61,25 @@ exports.run = (client, message, args = []) => {
                         message.channel.send({embed}).then(m => m.delete(config.deletetimererror));
                         return;
                       }
-                      embed.setTitle(`${callback[0].GROUP} (${callback[0].SUBGROUP}) - ${callback[0].NAME}`)
+                      embed.setTitle(`${callback[0].Name} - ${callback[0].Theme} (${callback[0].CardType})`)
+                      embed.setDescription(`${callback[0].Count} copy in ${callback[0].CardSet}`)
                       embed.setColor(0x97ECEA)
-                      embed.attachFile(__dirname + `/../${callback[0].FILELOCATION}`)
+                      embed.attachFile(__dirname + `/../${callback[0].ImageURL}`)
                       message.channel.send({embed}).then(m => m.delete(config.deletetimerimage));
                   });
             }
             else  {
                 embed.setColor(0x97ECEA)
                 embed.setTitle(`Results of "${args.join(' ')}"`)
-                embed.setDescription('')
                 var x = `${callback.length} results:`
-                var y = ""
-                if (callback.length > 20) { var x = `20 of ${callback.length} results shown:` }
+                if (callback.length >= 10) { var x = `10 of ${callback.length} results shown:` }
+                embed.setDescription(x)
                 for(i in callback) {
-                    if (i < 20) {
-                      var y = y + `${config.prefix}c ${callback[i].NAME}\n`
+                    if (i < 10) {
+                    embed.addField(`${config.prefix}c ${callback[i].Name}`,`${callback[i].Theme} (${callback[i].CardType}) - ${callback[i].CardSet}`)  
                     }
                 }
-                embed.addField(x,y)
-                embed.setFooter(`Detail your request. Example: ${config.prefix}c ${callback[0].NAME}`)
+                embed.setFooter(`Detail your request. Example: ${config.prefix}c ${callback[0].Name}`)
                 message.channel.send({embed}).then(m => m.delete(config.deletetimerlist));
               }  
         }
