@@ -35,24 +35,31 @@ exports.run = (client, message, args = []) => {
             message.channel.send({embed}).then(m => m.delete(config.deletetimererror));
         }
         if (callback) {
+            const embed = new Discord.RichEmbed()
+            embed.setColor(0x97ECEA)
             if (callback.length === 0) { 
                 gd.run(client, message, args);
             }
             else if (callback.length <= 3) { // 1 hit! - Post results (callback) immediately.
-                const embed = new Discord.RichEmbed()
-                embed.setColor(0x97ECEA)
+                /*
                 embed.setTitle(`Results of "${args.join(' ')}"`)
                 embed.setDescription(`${callback.length} results:`)
+                */
                 for(i in callback) { // 1 hit! - Post results (callback) immediately.
                     if (i < 3) {
-                        embed.addField(callback[i].TOPIC,`${callback[i].DESCRIPTION}\n\nSource: ${callback[i].SOURCE}`)
-                  }
+                        var lengthsum = callback[i].DESCRIPTION.length + callback[i].SOURCE.length
+                        if (lengthsum >= 1000) {
+                            embed.addField(callback[i].TOPIC,`${callback[i].DESCRIPTION.slice(0,1020)}`)
+                            embed.addField(`[...]${callback[i].TOPIC}`,`${callback[i].DESCRIPTION.slice(1020,2000)}\n\nSource: ${callback[i].SOURCE}`)
+                        }
+                        else {
+                            embed.addField(callback[i].TOPIC,`${callback[i].DESCRIPTION}\n\nSource: ${callback[i].SOURCE}`)
+                        }
+                    }
                 }
                 message.channel.send({embed});
             }
             else  {
-                const embed = new Discord.RichEmbed()
-                embed.setColor(0x97ECEA)
                 embed.setTitle(`Results of "${args.join(' ')}"`)
                 embed.setDescription('')
                 var x = `${callback.length} results:`

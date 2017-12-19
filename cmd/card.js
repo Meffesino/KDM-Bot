@@ -15,6 +15,16 @@ exports.run = (client, message, args = []) => {
         help.run(client, message, [ 'card' ] )
         return
     }
+
+    if (args[0].length < 4) { // to limit general search. The persons has to know, which card they are looking for!
+        const embed = new Discord.RichEmbed()
+        .setTitle("Search minimum length!")
+        .setDescription(`Your search has to be at least 4 characters long`)
+        .setColor(0xEF6E6E)
+        .setFooter(`For more information: ${config.prefix}help ${command.help.name}`)
+        message.channel.send({embed}).then(m => m.delete(config.deletetimererror));
+        return
+    }
     
     var execute = "SELECT * FROM kdmCardDB WHERE NAME LIKE '%" + [args[0]] + "%'"
     for (var i in args) {

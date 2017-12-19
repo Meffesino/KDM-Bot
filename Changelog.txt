@@ -1,9 +1,14 @@
 0.3.0 - 
-Added dm (direct message). When someone is spamming in public channel. The bot will private message the person and tell him, to proceed asking the bot via private message to reduce spam for everyone in the channel without additional information. This can be triggered with permission lvl 2.
 
-Added cards: Bot will post the picture of the card and delete his post after specified time to reduce traffic and spam.
+New Features:
+- Added ?dm (direct message). When someone is using the bot in public channel, but the information given is only for him. The bot will private message the person and tell him, to proceed asking the bot via private message to reduce spam for everyone in the channel without additional information. This can be triggered with permission lvl 2.
+- Added ?cards: Bot will either post the picture or the text of the card and delete this post after specified time to reduce traffic and spam.
+- Added delete timer on error messages and lists. Messages of bot will be deleted after a specified time.
 
-Added delete timer on error messages. Post of bot will be deleted after a specified time.
+Bugfixes:
+- ?help <unknown command> will show the standard ?help message.
+- ?gd is now checking the name of the glossary next to the detailed description now.
+- minor bugfixes, typos etc.
 
 0.2.0 - 
 Added FAQ Search

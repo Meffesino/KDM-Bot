@@ -18,29 +18,43 @@ exports.run = (client, message, args = []) => {
 
     
     sql.qry("SELECT * FROM Glossary WHERE G_ID = '" + [args[0]] + "'", message, "Glossary", function(err, callback) {
+        const embed = new Discord.RichEmbed()
         if (err) { 
-            const embed = new Discord.RichEmbed()
-            .setTitle("Error")
-            .setDescription(`Error Code: ${err}\n\n Search: ${args[0]}`)
-            .setColor(0xEF6E6E)
-            .setFooter(`For more information: ${config.prefix}help ${command.help.name}`)
+            embed.setTitle("Error")
+            embed.setDescription(`Error Code: ${err}\n\n Search: ${args[0]}`)
+            embed.setColor(0xEF6E6E)
+            embed.setFooter(`For more information: ${config.prefix}help ${command.help.name}`)
             message.channel.send({embed}).then(m => m.delete(config.deletetimererror));
         }
         if (callback) {
             if (callback.length === 0) { 
-                const embed = new Discord.RichEmbed()
-                .setTitle("Error in Request - nothing found")
-                .setDescription(`Your request: **${config.prefix}${command.help.usage} ${args[0]}** has given no result.\nTry to change your request\n\nExample:\n          ${command.help.example}`)
-                .setColor(0xEF6E6E)
-                .setFooter(`For more information: ${config.prefix}help ${command.help.name}`)
+                embed.setTitle("Error in Request - nothing found")
+                embed.setDescription(`Your request: **${config.prefix}${command.help.usage} ${args[0]}** has given no result.\nTry to change your request\n\nExample:\n          ${command.help.example}`)
+                embed.setColor(0xEF6E6E)
+                embed.setFooter(`For more information: ${config.prefix}help ${command.help.name}`)
                 message.channel.send({embed}).then(m => m.delete(config.deletetimererror));
             }
             if (callback.length === 1) { // 1 hit! - Post results (callback) immediately.
-                const embed = new Discord.RichEmbed()
-                .setTitle(callback[0].TOPIC)
-                .setDescription(callback[0].DESCRIPTION)
-                .setColor(0x97ECEA)
-                .setFooter(`Source: ${callback[0].SOURCE}`)
+
+                for(i in callback) { // 1 hit! - Post results (callback) immediately.
+                    if (i < 3) {
+                        var lengthsum = callback[i].DESCRIPTION.length + callback[i].SOURCE.length
+                        if (lengthsum >= 1000) {
+                            embed.addField(callback[i].TOPIC,`${callback[i].DESCRIPTION.slice(0,1020)}`)
+                            embed.addField(`[...]${callback[i].TOPIC}`,`${callback[i].DESCRIPTION.slice(1020,2000)}\n\nSource: ${callback[i].SOURCE}`)
+                        }
+                        else {
+                            embed.addField(callback[i].TOPIC,`${callback[i].DESCRIPTION}\n\nSource: ${callback[i].SOURCE}`)
+                        }
+                    }
+                }
+                embed.setColor(0x97ECEA)
+                /*
+                embed.setTitle(callback[0].TOPIC)
+                embed.setDescription(callback[0].DESCRIPTION)
+         
+                embed.setFooter(`Source: ${callback[0].SOURCE}`)
+                  */     
                 message.channel.send({embed});
               }
         }
