@@ -37,10 +37,15 @@ exports.run = (client, message, args = []) => {
             }
             if (callback.length === 1) { // 1 hit! - Post results (callback) immediately.
                 const embed = new Discord.RichEmbed()
-                .setTitle(callback[0].QUESTION)
-                .setDescription(callback[0].ANSWER)
-                .setColor(0x97ECEA)
-                .setFooter(`Source: ${callback[0].SOURCE}`)
+                embed.setColor(0x97ECEA)
+                var lengthsum = callback[0].ANSWER.length + callback[0].SOURCE.length
+                if (lengthsum >= 1000) {
+                    embed.addField(callback[0].QUESTION,`${callback[0].ANSWER.slice(0,1020)}`)
+                    embed.addField(`[continue...]`,`${callback[0].ANSWER.slice(1020,2000)}\n\nSource:\n${callback[0].SOURCE}`)
+                }
+                else {
+                    embed.addField(callback[0].QUESTION,`${callback[0].ANSWER}\n\nSource:\n${callback[0].SOURCE}`)
+                }
                 message.channel.send({embed});
               }
         }

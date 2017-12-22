@@ -41,20 +41,14 @@ exports.run = (client, message, args = []) => {
                         var lengthsum = callback[i].DESCRIPTION.length + callback[i].SOURCE.length
                         if (lengthsum >= 1000) {
                             embed.addField(callback[i].TOPIC,`${callback[i].DESCRIPTION.slice(0,1020)}`)
-                            embed.addField(`[...]${callback[i].TOPIC}`,`${callback[i].DESCRIPTION.slice(1020,2000)}\n\nSource: ${callback[i].SOURCE}`)
+                            embed.addField(`[...]${callback[i].TOPIC}`,`${callback[i].DESCRIPTION.slice(1020,2000)}\n\nSource:\n${callback[i].SOURCE}`)
                         }
                         else {
-                            embed.addField(callback[i].TOPIC,`${callback[i].DESCRIPTION}\n\nSource: ${callback[i].SOURCE}`)
+                            embed.addField(callback[i].TOPIC,`${callback[i].DESCRIPTION}\n\nSource:\n${callback[i].SOURCE}`)
                         }
                     }
                 }
                 embed.setColor(0x97ECEA)
-                /*
-                embed.setTitle(callback[0].TOPIC)
-                embed.setDescription(callback[0].DESCRIPTION)
-         
-                embed.setFooter(`Source: ${callback[0].SOURCE}`)
-                  */     
                 message.channel.send({embed});
               }
         }

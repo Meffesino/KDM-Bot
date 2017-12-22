@@ -55,10 +55,10 @@ exports.run = (client, message, args = []) => {
                         var lengthsum = callback[i].ANSWER.length + callback[i].SOURCE.length
                         if (lengthsum >= 1000) {
                             embed.addField(callback[i].QUESTION,`${callback[i].ANSWER.slice(0,1020)}`)
-                            embed.addField(`[continue...]`,`${callback[i].ANSWER.slice(1020,2000)}\n\nSource: ${callback[i].SOURCE}`)
+                            embed.addField(`[continue...]`,`${callback[i].ANSWER.slice(1020,2000)}\n\nSource:\n${callback[i].SOURCE}`)
                         }
                         else {
-                            embed.addField(callback[i].QUESTION,`${callback[i].ANSWER}\n\nSource: ${callback[i].SOURCE}`)
+                            embed.addField(callback[i].QUESTION,`${callback[i].ANSWER}\n\nSource:\n${callback[i].SOURCE}`)
                         }
                     }
                 }
