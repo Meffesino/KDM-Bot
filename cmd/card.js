@@ -104,7 +104,7 @@ exports.conf = {
   ShowHelp: true,
   Children: [ 'cid' ],
   aliases: [ 'c', 'cards' ],
-  permLevel: 0
+  permLevel: 2
 };
 
 exports.help = {

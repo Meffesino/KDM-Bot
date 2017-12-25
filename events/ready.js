@@ -7,6 +7,12 @@ const log = message => {
 
 module.exports = client => { 
     client.user.setGame(`KD:M - White Secret Event`); 
-    log(chalk.bgGreen(`Bot online at Discord, with ${client.users.size} users, in ${client.channels.size} channels of ${client.guilds.size} guilds.`)); 
+    log(chalk.bgGreen(`Bot online at Discord, with ${client.users.size} users, in ${client.channels.size} channels of ${client.guilds.size} guilds.`))
 
+    log(chalk.yellow(`Starting Shop`))
+    var message = "0" //blank, that the command will not messed up
+    let command = "shop";
+    let args = [ "init" ];
+    let cmd = client.commands.get(command);
+    cmd.run(client, message, args);
 };
