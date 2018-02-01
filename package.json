@@ -8,10 +8,11 @@
   "dependencies": {
     "chalk": "^2.3.0",
     "cheerio": "^1.0.0-rc.2",
-    "discord.js": "^11.2.1",
-    "moment": "^2.19.3",
+    "discord.js": "^11.3.0",
+    "moment": "^2.20.1",
     "mysql": "^2.15.0",
     "request": "^2.83.0",
+    "underscore": "^1.8.3",
     "util": "^0.10.3"
   }
 }

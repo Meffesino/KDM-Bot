@@ -56,22 +56,22 @@ GetInfo(Glossary.table, function(error, updatetime, count, qryamount) {
 
 
 function GetInfo(table, callback) { 
-  /* Process: 
-  1: "updateTimeAndCount and transfer Table, to identify". This triggers the SQL
-  2: SQL result will be given to _QryAmount, which will first trigger _checkForErrors
-  3: _check for Errors will check if any Error occures
-  */
-function _checkForErrors(error, results, reason) {
-      if (error) {
-          error2 = `error to perform on table: '${table}' in section '${reason}' with Error:'${error}`;
-          return true;
-      } 
-      if (results.length === 0) {
-          error2 = `failure to perform on table: '${table}' in section '${reason}'`;
-          return true;
-      }
-      return false;
-}
+    /* Process: 
+    1: "updateTimeAndCount and transfer Table, to identify". This triggers the SQL
+    2: SQL result will be given to _QryAmount, which will first trigger _checkForErrors
+    3: _check for Errors will check if any Error occures
+    */
+  function _checkForErrors(error, results, reason) {
+        if (error) {
+            error2 = `error to perform on table: '${table}' in section '${reason}' with Error:'${error}`;
+            return true;
+        } 
+        if (results.length === 0) {
+            error2 = `failure to perform on table: '${table}' in section '${reason}'`;
+            return true;
+        }
+        return false;
+  }
 
   function _QryAmount(error, results) {
       if (_checkForErrors(error, results, 'QryAmount')) {
