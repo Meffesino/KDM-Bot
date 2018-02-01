@@ -43,7 +43,9 @@ client.on("message", async message => {
   if(message.author.bot) return; //ignore bots
   
   if (message.channel.type != 'dm') { // Check if the message was not a direct message.
-    if (message.guild.id != config.serverid) return; //guild.id 268743075990470656 = Lantern's Reign Guild ID
+    if ((message.guild.id != config.serverid) && (message.guild.id != config.serverid2)) return;  
+    //guild.id 268743075990470656 = Lantern's Reign Guild ID 
+    //guild.id  
   }
  
   // message start with prefix?
