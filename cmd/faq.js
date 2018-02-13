@@ -48,8 +48,6 @@ exports.run = (client, message, args = []) => {
             else if (callback.length <= 2) { // 1 hit! - Post results (callback) immediately.
                 const embed = new Discord.RichEmbed()
                 embed.setColor(0x97ECEA)
-                embed.setTitle(`Results of "${args.join(' ')}"`)
-                embed.setDescription(`${callback.length} results:`)
                 for(i in callback) { // 1 hit! - Post results (callback) immediately.
                     if (i < 2) {
                         var lengthsum = callback[i].ANSWER.length + callback[i].SOURCE.length
@@ -67,12 +65,6 @@ exports.run = (client, message, args = []) => {
             else  {
                 const embed = new Discord.RichEmbed()
                 embed.setColor(0x97ECEA)
-                embed.setTitle(`Results of "${args.join(' ')}"`)
-
-                var x = `${callback.length} results:`
-                var y = ""
-                if (callback.length > 20) { var x = `20 of ${callback.length} results shown:` }
-                embed.setDescription(x)
                 for(i in callback) {
                   if (i < 20) {
                     embed.addField(`${config.prefix}fid ${callback[i].F_ID}`,`${callback[i].QUESTION}`)

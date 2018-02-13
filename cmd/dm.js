@@ -6,7 +6,7 @@ const chalk = require('chalk');
 const help = require('./help')
 
 const log = message => {
-    console.log(`[${moment().format('YYYY-MM-DD HH:mm:ss')}] ${message}`);
+    console.log(`[${moment().format('YYYY-MM-DD HH:mm:ss')}] ${chalk.yellow("DM:")}`, message);
   };
 
 exports.run = (client, message, args = []) => {

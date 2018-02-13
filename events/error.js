@@ -6,6 +6,6 @@ const log = message => {
   };
 
 module.exports = client => { 
-    log(chalk.bgRed("ERROR"));
+    log(chalk.bgRed("error.js: ERROR"));
     log(chalk.bgRed(e));
 };

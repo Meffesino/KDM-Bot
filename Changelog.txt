@@ -1,4 +1,13 @@
-0.4.0-
+0.4.1 -
+- FAQ: remove "1 result".
+- SHOP: Added auto delete on new & removed products after 24 hours.
+- SHOP: Added inventory log message of the last 24 hours (edit mode - no new message highlight).
+- SHOP: Added Turbo mode: When new store products will be added, it will check the store quicker and will stop after no changes in 20min
+- SHOP: @ Everyone message received a 2 hours time out.
+- INTERNAL: Changed Console Log tracking.
+
+
+0.4.0 -
 - Shop module added. This is including inventory too. The items will be posted in a separate channel and edited on updates.
 
 0.3.0 - 

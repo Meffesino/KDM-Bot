@@ -9,7 +9,7 @@ module.exports.qry = qry; //to trigger the query command, Querry, message, table
 module.exports.simpleqry = simpleqry; //trigger the query command, only querry needed. Callback error / result.
 
 const log = message => {
-  console.log(`[${moment().format('YYYY-MM-DD HH:mm:ss')}] ${message}`);
+  console.log(`[${moment().format('YYYY-MM-DD HH:mm:ss')}] ${chalk.yellow("DM:")}`, message);
 };
 
 // SQL Query execution.
@@ -45,9 +45,10 @@ function sqllog(userid, username, table, sqlqry, resultslength) {
 
 function simpleqry(execute, callback) {
   var qry = pool.query(execute, function(error, results, fields) {
-      //console.log(qry.sql)
+     // console.log(qry.sql)
       if (error) {
           var resultslength = `ERROR: ${error.code}`
+          log(`ERROR: ${error.code}`)
           error = error.code
       }  
       callback(error, results) // error and results will be send back

@@ -69,7 +69,7 @@ client.on("message", async message => {
   }
   if (cmd) {
     if (perms < cmd.conf.permLevel) {
-      log(`Permissions to low: ${perms} < ${perms} // Command ${command}`)
+      log(`${chalk.red(`Permissions to low:`)} ${message.author.username} - Command: '${command}' - Permission: ${perms} < ${cmd.conf.permLevel}`)
       return
     };
     //console.log(util.inspect(cmd, false, null))

@@ -6,7 +6,7 @@ const moment = require('moment');
 const chalk = require('chalk');
 
 const log = message => {
-    console.log(`[${moment().format('YYYY-MM-DD HH:mm:ss')}] ${message}`);
+    console.log(`[${moment().format('YYYY-MM-DD HH:mm:ss')}] ${chalk.yellow("Info:")}`, message);
   };
 
 exports.run = (client, message, args = []) => {
@@ -80,7 +80,7 @@ function GetInfo(table, callback) {
           updatetime = results[0].Updatetime
           count = results[0].Count
           execute = execute = `Select Searchtable, Count(*) as 'Count' From SQLLog Where Searchtable = '${table}' group by Searchtable`
-          sql.simpleqry(execute, _getData);
+          sql.simpleqry(execute, cb);
       }
   }
 

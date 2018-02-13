@@ -6,7 +6,7 @@ const log = message => {
   };
 
 module.exports = Client => { 
-    console.log("Sending a heartbeat")
+    console.log("Debug: Sending a heartbeat")
     console.log(Client)
    /* if (client.indexOf("Sending a heartbeat") == -1 ) { //reducing spamming of debug. But still shows the latency.
         log(chalk.gray("DEBUG", client));
