@@ -4,12 +4,15 @@ const prefix = config.prefix //loading the prefix set in the config file
 const moment = require('moment');
 const Discord = require('discord.js');
 const chalk = require('chalk');
+const path = require('path');
+
+var scriptName = path.basename(__filename);
 
 module.exports.qry = qry; //to trigger the query command, Querry, message, table needed. Callback error / result.
 module.exports.simpleqry = simpleqry; //trigger the query command, only querry needed. Callback error / result.
 
 const log = message => {
-  console.log(`[${moment().format('YYYY-MM-DD HH:mm:ss')}] ${chalk.yellow("DM:")}`, message);
+  console.log(`[${moment().format('YYYY-MM-DD HH:mm:ss')}] ${chalk.yellow("SQL:")}`, message);
 };
 
 // SQL Query execution.
@@ -45,7 +48,7 @@ function sqllog(userid, username, table, sqlqry, resultslength) {
 
 function simpleqry(execute, callback) {
   var qry = pool.query(execute, function(error, results, fields) {
-     // console.log(qry.sql)
+     //log(qry.sql)
       if (error) {
           var resultslength = `ERROR: ${error.code}`
           log(`ERROR: ${error.code}`)

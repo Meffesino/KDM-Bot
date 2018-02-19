@@ -3,10 +3,13 @@ const Discord = require("discord.js")
 const config = require("../config.json");
 const moment = require('moment');
 const chalk = require('chalk');
-const help = require('./help')
+const help = require('./help');
+const path = require('path');
+
+var scriptName = path.basename(__filename);
 
 const log = message => {
-    console.log(`[${moment().format('YYYY-MM-DD HH:mm:ss')}] ${chalk.yellow("DM:")}`, message);
+    console.log(`[${moment().format('YYYY-MM-DD HH:mm:ss')}] ${chalk.whiteBright(scriptName)}`, message);
   };
 
 exports.run = (client, message, args = []) => {

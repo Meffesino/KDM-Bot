@@ -9,6 +9,9 @@ const mysql = require('mysql');
 const sql = require('./util/sql.js')
 const chalk = require('chalk');
 const util = require('util')
+const path = require('path');
+
+var scriptName = path.basename(__filename);
 
 require('./util/eventLoader')(client);
 
@@ -114,6 +117,29 @@ client.on('debug', e => {
   if ((e.indexOf("Sending a heartbeat") == -1 ) && (e.indexOf("Heartbeat acknowledged") == -1 )) { //reducing spamming of debug. But still shows the latency.
     log(chalk.gray(e));
   }
+});
+
+client.on('ready', e => {
+  log(chalk.bgGreen(`Ready: Bot online at Discord, with ${client.users.size} users, in ${client.channels.size} channels of ${client.guilds.size} guilds.`))
+  client.user.setActivity(`KD:M - White Secret Event`) 
+
+  // Shop Starting:
+  log(chalk.yellow(`Ready: Starting Shop`))
+  //var message = { "author" : { "username" : "READY COMMAND" } }
+
+  var messageTemp = "0" //blank, that the command will not messed up
+  var commandTemp = "shop";
+  var argsTemp = [ "init" ];
+  var cmdTemp = client.commands.get(commandTemp);
+  cmdTemp.run(client, messageTemp, argsTemp);
+
+  // Twitter Starting:
+  log(chalk.yellow(`Ready: Starting Twitter`))
+  var messageTemp2 = { "author" : { "username" : "READY COMMAND" } }
+  let commandTemp2 = "twitter";
+  let argsTemp2 = [ "init" ];
+  let cmdTemp2 = client.commands.get(commandTemp2);
+  cmdTemp2.run(client, messageTemp2, argsTemp2);
 });
 
 // For Command Handler

@@ -1,7 +1,11 @@
 node_modules
-config.json
+config*
 img
 test.js
 cmd/testing.js
 kdm_webshop
 .vscode
+ChalkColors.js
+log
+cmd/twitter.js
+

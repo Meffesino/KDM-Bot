@@ -1,10 +1,18 @@
 const config = require("../config.json");
 const Discord = require('discord.js');
-const moment = require('moment');
 const sql = require('../util/sql.js');
 const help = require('./help')
+const chalk = require('chalk');
+const moment = require('moment');
+const path = require('path');
+
+var scriptName = path.basename(__filename);
+const log = message => {
+    console.log(`[${moment().format('YYYY-MM-DD HH:mm:ss')}] ${chalk.green(scriptName)}`,message);
+};
 
 exports.run = (client, message, args = []) => {
+    log(`${message.author.username} - ${message.content}`)
     let command = "faq"
     if(client.commands.has(command)) {
         command = client.commands.get(command);

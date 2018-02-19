@@ -1,10 +1,13 @@
 const config = require("../config.json");
-const moment = require('moment');
 const chalk = require('chalk');
+const moment = require('moment');
+const path = require('path');
+
+var scriptName = path.basename(__filename);
 
 const log = message => {
-    console.log(`[${moment().format('YYYY-MM-DD HH:mm:ss')}] ${chalk.yellow("Help:")}`, message);
-  };
+    console.log(`[${moment().format('YYYY-MM-DD HH:mm:ss')}] ${chalk.gray(scriptName)}`,message);
+};
 
 
 exports.run = (client, message, args) => {
@@ -12,8 +15,8 @@ exports.run = (client, message, args) => {
 
 
 
-  log(chalk.bgWhite.gray(`${chalk.blueBright.bold(`Help:`)} ${message.author.username}`));
-  //Show ?help commands.
+  log(`${message.author.username} - ${message.content}`)
+    //Show ?help commands.
   if (!args[0]) {
     StandardHelpMsg()
   } 

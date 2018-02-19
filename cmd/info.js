@@ -4,13 +4,16 @@ const package = require("../package.json");
 const sql = require('../util/sql.js');
 const moment = require('moment');
 const chalk = require('chalk');
+const path = require('path');
+
+var scriptName = path.basename(__filename);
 
 const log = message => {
-    console.log(`[${moment().format('YYYY-MM-DD HH:mm:ss')}] ${chalk.yellow("Info:")}`, message);
-  };
+  console.log(`[${moment().format('YYYY-MM-DD HH:mm:ss')}] ${chalk.gray(scriptName)}`,message);
+};
 
 exports.run = (client, message, args = []) => {
-
+  log(`${message.author.username} - ${message.content}`)
  // var query = pool.query("SELECT UPDATE_TIME FROM information_schema.tables WHERE TABLE_SCHEMA = 'd0287d28' AND TABLE_NAME = 'Glossary'", function(error, results, fields) {
 
 
@@ -22,7 +25,6 @@ exports.run = (client, message, args = []) => {
   var Cards = { table:"Cards", }
   var error2;
 
-  log(chalk.bgWhite.gray(`${chalk.blueBright.bold(`INFO:`)} ${message.author.username}`));
 
 //get info from Glossary first (Last Updatetime, How many Entries and how many Querries... You can copy this later and perform Cards.table etc. too
 GetInfo(Glossary.table, function(error, updatetime, count, qryamount) {  

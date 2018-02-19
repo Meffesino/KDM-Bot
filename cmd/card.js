@@ -1,11 +1,20 @@
 const config = require("../config.json");
 const Discord = require('discord.js');
-const moment = require('moment');
 const sql = require('../util/sql.js');
 const help = require('./help')
 const fs = require("fs");
+const chalk = require('chalk');
+const moment = require('moment');
+const path = require('path');
+
+var scriptName = path.basename(__filename);
+
+const log = message => {
+    console.log(`[${moment().format('YYYY-MM-DD HH:mm:ss')}] ${chalk.cyan(scriptName)}`,message);
+};
 
 exports.run = (client, message, args = []) => {
+    log(`${message.author.username} - ${message.content}`)
     
     let command = "card"
     if(client.commands.has(command)) {
@@ -15,6 +24,7 @@ exports.run = (client, message, args = []) => {
         help.run(client, message, [ 'card' ] )
         return
     }
+
 
     if (args[0].length < 4) { // to limit general search. The persons has to know, which card they are looking for!
         const embed = new Discord.RichEmbed()

@@ -1,3 +1,11 @@
+0.5 -
+- TWITTER: Twitter Module Added
+- SHOP: (BUGFIX) - Change Timer handling.
+- SHOP: Added Articles Update Time to Status report
+- APP: moved Discord.Ready Event to App directly.
+- INTERNAL: Changed Console Log tracking.
+
+
 0.4.1 -
 - FAQ: remove "1 result".
 - SHOP: Added auto delete on new & removed products after 24 hours.
