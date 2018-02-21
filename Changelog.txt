@@ -1,4 +1,10 @@
-0.5 -
+0.5.1 - 
+- INFO: Bug eliminated in SQL request
+- TWITTER: changed log path - was not working on UNIX filebase system
+- TWITTER: Added delete Timer.
+
+
+0.5.0 -
 - TWITTER: Twitter Module Added
 - SHOP: (BUGFIX) - Change Timer handling.
 - SHOP: Added Articles Update Time to Status report
@@ -16,13 +22,13 @@
 
 
 0.4.0 -
-- Shop module added. This is including inventory too. The items will be posted in a separate channel and edited on updates.
+- SHOP: module added. This is including inventory too. The items will be posted in a separate channel and edited on updates.
 
 0.3.0 - 
 New Features:
-- Added ?dm (direct message). When someone is using the bot in public channel, but the information given is only for him. The bot will private message the person and tell him, to proceed asking the bot via private message to reduce spam for everyone in the channel without additional information. This can be triggered with permission lvl 2.
-- Added ?cards: Bot will either post the picture or the text of the card and delete this post after specified time to reduce traffic and spam.
-- Added delete timer on error messages and lists. Messages of bot will be deleted after a specified time.
+- DM: Added ?dm (direct message). When someone is using the bot in public channel, but the information given is only for him. The bot will private message the person and tell him, to proceed asking the bot via private message to reduce spam for everyone in the channel without additional information. This can be triggered with permission lvl 2.
+- CARD: Added ?cards: Bot will either post the picture or the text of the card and delete this post after specified time to reduce traffic and spam.
+- MISC: Added delete timer on error messages and lists. Messages of bot will be deleted after a specified time.
 
 Bugfixes:
 - ?help <unknown command> will show the standard ?help message.
