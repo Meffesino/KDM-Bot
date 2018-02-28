@@ -1,3 +1,6 @@
+0.5.2 -
+- SHOP: bugfix (Typo)
+
 0.5.1 - 
 - INFO: Bug eliminated in SQL request
 - TWITTER: changed log path - was not working on UNIX filebase system
