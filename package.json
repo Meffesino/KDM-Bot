@@ -6,12 +6,12 @@
   "author": "Meffesino, Klutz",
   "license": "ISC",
   "dependencies": {
-    "chalk": "^2.3.1",
+    "chalk": "^2.3.2",
     "cheerio": "^1.0.0-rc.2",
-    "discord.js": "^11.3.0",
-    "moment": "^2.20.1",
+    "discord.js": "^11.3.2",
+    "moment": "^2.21.0",
     "mysql": "^2.15.0",
-    "request": "^2.83.0",
+    "request": "^2.85.0",
     "twit": "^2.2.9",
     "underscore": "^1.8.3",
     "util": "^0.10.3"
