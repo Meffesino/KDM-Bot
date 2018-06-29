@@ -10,6 +10,7 @@ const sql = require('./util/sql.js')
 const chalk = require('chalk');
 const util = require('util')
 const path = require('path');
+const logmongo = require('./cmd/logmongo.js');
 
 var scriptName = path.basename(__filename);
 
@@ -17,10 +18,8 @@ require('./util/eventLoader')(client);
 
 //Logging now log() instead of console.log()
 const log = message => {
-  console.log(`[${moment().format('YYYY-MM-DD HH:mm:ss')}] ${message}`);
+  console.log(`[${moment().format('YYYY-MM-DD HH:mm:ss')}] ${chalk.yellow(scriptName)}`,message);
 };
-
-
 
 // For Command Handler
 client.commands = new Discord.Collection();
@@ -40,8 +39,13 @@ fs.readdir(__dirname + '/cmd/', (err, files) => {
 
 client.on("message", async message => {
   //log(message) // Will show the Message which was received.
-  
   // This event will run on every single message received, from any channel or DM.
+  try {
+    logmongo.logmongo(message, client)
+  }
+  catch (error) {
+    log(chalk.red("Error in logmongo.js: ") + error)
+  }
   
   if(message.author.bot) return; //ignore bots
   
@@ -87,8 +91,8 @@ client.login(config.token, function(error, token){
   }
 
   if (error) {
-    log(`**Client Login error!**`)
-    log(error)
+    log(chalk.red("**Client Login error!**")),
+    log(error);
   }
 });
 
@@ -114,8 +118,13 @@ client.on('disconnect', e => {
 });
 
 client.on('debug', e => {
-  if ((e.indexOf("Sending a heartbeat") == -1 ) && (e.indexOf("Heartbeat acknowledged") == -1 )) { //reducing spamming of debug. But still shows the latency.
+ if ((e.indexOf("Sending a heartbeat") == -1 ) && (e.indexOf("Heartbeat acknowledged") == -1 )) { //reducing spamming of debug. But still shows the latency.
     log(chalk.gray(e));
+  }
+
+  if (e.indexOf("Heartbeat acknowledged") >= 0) {
+    //log(`Hearbeat! ${moment().format('YYYY-MM-DD HH:mm:ss')} ${client.pings} ${client.ping}`);
+    //log(chalk.gray(e));
   }
 });
 
@@ -144,6 +153,7 @@ client.on('ready', e => {
 
 // For Command Handler
 client.reload = function(command) {
+  log(chalk.yellow(`CLIENT.RELOAD - Should reload commands now`))
   return new Promise((resolve, reject) => {
     try {
       delete require.cache[require.resolve(`./cmd/${command}`)];

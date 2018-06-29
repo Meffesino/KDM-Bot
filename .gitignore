@@ -1,12 +1,14 @@
 node_modules
 config*
 img
-test.js
+test*
 cmd/testing.js
 kdm_webshop
 .vscode
 ChalkColors.js
 log
 cmd/twitter.js
-cmd/shop.js
-
+cmd/market.js
+cmd/shop*
+cmd2/*
+util/mongo.js

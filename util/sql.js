@@ -1,8 +1,6 @@
 const mysql = require('mysql');
 const config = require("../config.json"); // Here we load the config.json file that contains our token and our prefix values. 
-const prefix = config.prefix //loading the prefix set in the config file
 const moment = require('moment');
-const Discord = require('discord.js');
 const chalk = require('chalk');
 const path = require('path');
 
@@ -12,7 +10,8 @@ module.exports.qry = qry; //to trigger the query command, Querry, message, table
 module.exports.simpleqry = simpleqry; //trigger the query command, only querry needed. Callback error / result.
 
 const log = message => {
-  console.log(`[${moment().format('YYYY-MM-DD HH:mm:ss')}] ${chalk.yellow("SQL:")}`, message);
+  console.log(`[${moment().format('YYYY-MM-DD HH:mm:ss')}] ${chalk.yellow(scriptName)}`,message);
+
 };
 
 // SQL Query execution.
@@ -23,7 +22,7 @@ function qry(execute, message, table, callback) { //execute = SQL Command
     var userid = message.author.id
     var username = message.author.username
     if (error) {
-      var resultslength = `ERROR: ${error.code}`
+      var resultslength = `ERROR in "qry": ${error.code}`
       error = error.code
     }  
     if (results) {
@@ -51,7 +50,8 @@ function simpleqry(execute, callback) {
      //log(qry.sql)
       if (error) {
           var resultslength = `ERROR: ${error.code}`
-          log(`ERROR: ${error.code}`)
+          log(`ERROR in "simpleqry": ${error.code}`)
+          console.log(error)
           error = error.code
       }  
       callback(error, results) // error and results will be send back

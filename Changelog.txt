@@ -1,3 +1,7 @@
+0.6.0 -
+- LOGMONGO: Added to log all discord messages for later analysis
+- Mongo: Utility to save to mongo server!
+
 0.5.2 -
 - SHOP: bugfix (Typo)
 
