@@ -1,7 +1,7 @@
 const moment = require('moment');
 const chalk = require('chalk');
 const path = require('path');
-const mongo = require('../util/mongo.js')
+const mongo = require('../util/mongo.js');
 const config = require("../config.json");
 
 
@@ -18,50 +18,41 @@ function logmongo(message, client) {
     var words = WordCount(message.cleanContent) 
     if (((message.channel.type == 'text') || (message.channel.type == 'dm')) && (words > 0)) {
         var sqlinsert = { }
-        //log("-----AUTHOR-----")
         sqlinsert.type = message.channel.type
         sqlinsert.author = { }
         sqlinsert.author.id = message.author.id
         sqlinsert.author.username = message.author.username
-        //log(message.author.id)
-        //log(message.author.username)
-        //log("-----CHANNEL-----")
-        //log(message.channel.type)
         if (message.channel.type == 'text') {
-            //log("-----GUILD & Channel----")
             sqlinsert.guild = { }
             sqlinsert.guild.id = message.guild.id
             sqlinsert.guild.name = message.guild.name
             sqlinsert.guild.memberCount = message.guild.memberCount
-            
             sqlinsert.channel = { },
             sqlinsert.channel.id = message.channel.id
             sqlinsert.channel.name = message.channel.name
-            //log(message.guild.id) //geht nicht bei message.channel.type = dm
-            //log(message.guild.name) //geht nicht bei message.channel.type = dm
-            //log(message.guild.memberCount) //membercount //geht nicht bei message.channel.type = dm
-            //log(message.channel.id) //geht nicht bei message.channel.type = dm
-            //log(message.channel.name) //geht nicht bei message.channel.type = dm
+            //get parent ID and name
+            parentID = message.channel.parentID
+            parentName = message.guild.channels.filter(i => i.id == parentID).map(i => i.name)[0]
+            if(typeof parentName !== "undefined") {
+                sqlinsert.channel.parentID = parentID
+                sqlinsert.channel.parentName = parentName
+            }
+
         }
         else {
             sqlinsert.channel = { },
             sqlinsert.channel.id = 1
             sqlinsert.channel.name = client.user.username
-            //log("message.channel.id = 1")
-            //log(client.user.username)
+
         }
-        //log("-----MESSAGE-----")
+
         sqlinsert.message = { }
         sqlinsert.message.id = message.id
         sqlinsert.message.cleanContent = message.cleanContent
         sqlinsert.message.WordCount = words
-        //log(message.id)
-        //log(message.cleanContent) // Will show the Message which was received.
-        //log("-----CREATEDAT-----")
         sqlinsert.createdTimestamp = message.createdTimestamp
         sqlinsert.createdAt = message.createdAt
-        //log(message.createdTimestamp) // timestamp
-        //log(message.createdAt) // timestamp
+
         
         //log(sqlinsert)
         
