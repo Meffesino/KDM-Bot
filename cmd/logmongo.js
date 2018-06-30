@@ -70,7 +70,7 @@ function logmongo(message, client) {
             log(`${chalk.red("CRITICAL ERROR")}\n` + err.stack)
         }
         if (result) {
-            log("Mongo Insert: " + JSON.stringify(result.result) + " // " + JSON.stringify(result.ops, null))
+            //log("Mongo Insert: " + JSON.stringify(result.result) + " // " + JSON.stringify(result.ops, null))
         }
         });
     }; 
