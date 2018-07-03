@@ -17,46 +17,46 @@ function logmongo(message, client) {
 
     var words = WordCount(message.cleanContent) 
     if (((message.channel.type == 'text') || (message.channel.type == 'dm')) && (words > 0)) {
-        var sqlinsert = { }
-        sqlinsert.type = message.channel.type
-        sqlinsert.author = { }
-        sqlinsert.author.id = message.author.id
-        sqlinsert.author.username = message.author.username
+        var query = { }
+        query.type = message.channel.type
+        query.author = { }
+        query.author.id = message.author.id
+        query.author.username = message.author.username
         if (message.channel.type == 'text') {
-            sqlinsert.guild = { }
-            sqlinsert.guild.id = message.guild.id
-            sqlinsert.guild.name = message.guild.name
-            sqlinsert.guild.memberCount = message.guild.memberCount
-            sqlinsert.channel = { },
-            sqlinsert.channel.id = message.channel.id
-            sqlinsert.channel.name = message.channel.name
+            query.guild = { }
+            query.guild.id = message.guild.id
+            query.guild.name = message.guild.name
+            query.guild.memberCount = message.guild.memberCount
+            query.channel = { },
+            query.channel.id = message.channel.id
+            query.channel.name = message.channel.name
             //get parent ID and name
             parentID = message.channel.parentID
             parentName = message.guild.channels.filter(i => i.id == parentID).map(i => i.name)[0]
             if(typeof parentName !== "undefined") {
-                sqlinsert.channel.parentID = parentID
-                sqlinsert.channel.parentName = parentName
+                query.channel.parentID = parentID
+                query.channel.parentName = parentName
             }
 
         }
         else {
-            sqlinsert.channel = { },
-            sqlinsert.channel.id = 1
-            sqlinsert.channel.name = client.user.username
+            query.channel = { },
+            query.channel.id = 1
+            query.channel.name = client.user.username
 
         }
 
-        sqlinsert.message = { }
-        sqlinsert.message.id = message.id
-        sqlinsert.message.cleanContent = message.cleanContent
-        sqlinsert.message.WordCount = words
-        sqlinsert.createdTimestamp = message.createdTimestamp
-        sqlinsert.createdAt = message.createdAt
+        query.message = { }
+        query.message.id = message.id
+        query.message.cleanContent = message.cleanContent
+        query.message.WordCount = words
+        query.createdTimestamp = message.createdTimestamp
+        query.createdAt = message.createdAt
 
         
-        //log(sqlinsert)
+        //log(query)
         
-        mongo.insertMongo("discord_log",sqlinsert,function (err,result){
+        mongo.insertMongo("discord_log",query,function (err,result){
         if (err) {
             log(`${chalk.red("CRITICAL ERROR")}\n` + err.stack)
         }

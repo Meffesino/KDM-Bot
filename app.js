@@ -2,13 +2,13 @@
 const Discord = require("discord.js"); // Load up the discord.js library
 const client = new Discord.Client({ fetchAllMembers: true }, {autoReconnect:true} ); // This is the client of Discord. 
 const config = require("./config.json"); // Here we load the config.json file that contains our token and our prefix values. 
-const prefix = config.prefix //loading the prefix set in the config file
+//const prefix = config.prefix //loading the prefix set in the config file
 const moment = require('moment');
 const fs = require("fs");
-const mysql = require('mysql');
+//const mysql = require('mysql');
 const sql = require('./util/sql.js')
 const chalk = require('chalk');
-const util = require('util')
+//const util = require('util')
 const path = require('path');
 const logmongo = require('./cmd/logmongo.js');
 
